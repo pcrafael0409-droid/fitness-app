@@ -104,15 +104,7 @@ export default function AquecimentoPage() {
         })}
       </div>
 
-      {/* Fixed Progress Bar above Navbar */}
-      <div className="fixed bottom-[72px] left-1/2 -translate-x-1/2 w-full max-w-[500px] px-4 z-40">
-        <div className="w-full h-1.5 bg-[#333] rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-[#c66035] transition-all duration-500 ease-out" 
-            style={{ width: `${progressPercent}%` }}
-          ></div>
-        </div>
-      </div>
+
     </div>
   );
 }
