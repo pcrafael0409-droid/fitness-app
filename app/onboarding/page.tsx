@@ -33,6 +33,7 @@ export default function OnboardingPage() {
     await saveOnboarding({
       nome,
       idade,
+      peso,
       nivel,
       dor,
       objetivo

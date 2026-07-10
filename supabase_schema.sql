@@ -25,7 +25,10 @@ CREATE TABLE configuracoes (
   user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
   nome TEXT,
   idade INTEGER,
+  peso NUMERIC,
   nivel TEXT,
+  dor TEXT,
+  objetivo TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 

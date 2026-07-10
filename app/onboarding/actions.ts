@@ -3,7 +3,7 @@
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { cookies } from 'next/headers';
 
-export async function saveOnboarding(data: { nome: string; idade: string; nivel: string; dor: string; objetivo: string }) {
+export async function saveOnboarding(data: { nome: string; idade: string; peso: string; nivel: string; dor: string; objetivo: string }) {
   try {
     const cookieStore = await cookies();
     const userId = cookieStore.get('fit_user_session')?.value;
@@ -12,16 +12,16 @@ export async function saveOnboarding(data: { nome: string; idade: string; nivel:
       return { success: false, error: 'Não autenticado' };
     }
 
-    // A tabela atual tem 'nome', 'idade', 'nivel'
-    // Se o banco não tiver 'dor' e 'objetivo', você precisaria adicionar essas colunas, 
-    // mas por enquanto salvamos as 3 principais e atualizamos o nome do usuário lá.
     const { error } = await supabaseAdmin
       .from('configuracoes')
       .upsert({
         user_id: userId,
         nome: data.nome,
         idade: parseInt(data.idade) || null,
+        peso: parseFloat(data.peso) || null,
         nivel: data.nivel,
+        dor: data.dor,
+        objetivo: data.objetivo
       });
 
     if (error) {

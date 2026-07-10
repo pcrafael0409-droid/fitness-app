@@ -24,7 +24,14 @@ export async function verifyUserEmail(email: string) {
       path: '/',
     });
 
-    return { success: true, user };
+    // Verifica se já fez o onboarding
+    const { data: config } = await supabaseAdmin
+      .from('configuracoes')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .single();
+
+    return { success: true, user, hasOnboarding: !!config };
   } catch (err) {
     console.error('Error verifying email:', err);
     return { success: false };

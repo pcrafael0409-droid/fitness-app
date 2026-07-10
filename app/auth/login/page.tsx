@@ -15,10 +15,10 @@ export default function LoginPage() {
 
     try {
       // Usando a Server Action para bypassar o RLS do banco de dados
-      const { success } = await verifyUserEmail(email);
+      const res = await verifyUserEmail(email);
 
       // Bloqueia quem não comprou
-      if (!success) {
+      if (!res.success) {
         alert("E-mail não encontrado! Verifique se é o mesmo e-mail usado na compra da Kiwify.");
         setLoading(false);
         return;
@@ -30,8 +30,12 @@ export default function LoginPage() {
         localStorage.setItem('fit_user_email', email);
       }
 
-      // 3. Redireciona para o Quiz de Onboarding
-      router.push('/onboarding');
+      // 3. Redireciona para o Quiz de Onboarding ou Dashboard direto
+      if (res.hasOnboarding) {
+        router.push('/dashboard');
+      } else {
+        router.push('/onboarding');
+      }
       
     } catch (err) {
       console.error(err);
