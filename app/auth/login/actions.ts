@@ -37,3 +37,17 @@ export async function verifyUserEmail(email: string) {
     return { success: false };
   }
 }
+
+export async function getUserNameByEmail(email: string) {
+  try {
+    const { data: user } = await supabaseAdmin
+      .from('users')
+      .select('name')
+      .eq('email', email)
+      .single();
+    
+    return { name: user?.name || '' };
+  } catch (err) {
+    return { name: '' };
+  }
+}

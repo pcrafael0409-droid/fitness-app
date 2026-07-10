@@ -59,19 +59,6 @@ export default function LoginPage() {
         {/* Form */}
         <form className="space-y-5" onSubmit={handleLogin}>
           
-          {/* Nome */}
-          <div>
-            <label className="block text-sm text-gray-300 mb-2">Seu Primeiro Nome</label>
-            <input 
-              type="text" 
-              placeholder="Ex: João" 
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              className="w-full bg-[#1e1e1e] border border-[#333] text-white rounded-xl p-4 focus:ring-1 focus:ring-[#c66035] focus:border-[#c66035] outline-none transition" 
-              required
-            />
-          </div>
-
           {/* Email */}
           <div>
             <label className="block text-sm text-gray-300 mb-2">E-mail usado na Kiwify</label>
@@ -80,6 +67,25 @@ export default function LoginPage() {
               placeholder="nome@email.com" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onBlur={async () => {
+                if (email) {
+                  const res = await import('./actions').then(m => m.getUserNameByEmail(email));
+                  if (res.name) setNome(res.name);
+                }
+              }}
+              className="w-full bg-[#1e1e1e] border border-[#333] text-white rounded-xl p-4 focus:ring-1 focus:ring-[#c66035] focus:border-[#c66035] outline-none transition" 
+              required
+            />
+          </div>
+
+          {/* Nome */}
+          <div>
+            <label className="block text-sm text-gray-300 mb-2">Seu Primeiro Nome</label>
+            <input 
+              type="text" 
+              placeholder="Ex: João" 
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
               className="w-full bg-[#1e1e1e] border border-[#333] text-white rounded-xl p-4 focus:ring-1 focus:ring-[#c66035] focus:border-[#c66035] outline-none transition" 
               required
             />
