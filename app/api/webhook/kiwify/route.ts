@@ -27,8 +27,7 @@ export async function POST(request: Request) {
       // 2. Insere o aluno no nosso banco de dados usando Service Role (liberando o acesso bypassando RLS)
       const { error } = await supabaseAdmin
         .from('users')
-        .insert([{ email: buyerEmail, name: buyerName }])
-        // Opcional: Se ele comprar de novo (upsell), não dá erro por email duplicado
+        // Se ele comprar de novo (upsell), não dá erro por email duplicado graças ao upsert
         .upsert({ email: buyerEmail, name: buyerName }, { onConflict: 'email' });
 
       if (error) {
